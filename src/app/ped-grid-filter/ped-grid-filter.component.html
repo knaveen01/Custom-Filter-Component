@@ -9,11 +9,15 @@
 	</div>			
 	<!--customFilters-->
 	<div formArrayName="customFilters">
-	  <div *ngFor="let customFilter of myForm.controls.customFilters.controls; let i=index" class="panel panel-default">
+	  <div *ngFor="let customFilter of myForm.controls.customFilters.controls; let i=index;" class="panel panel-default">
 		<div class="panel-body" [formGroupName]="i">
 		  <app-custom-filter [group]="myForm.controls.customFilters.controls[i]" 
 		  [customFilterCount]="myForm.controls.customFilters.controls.length" 
-		  [customFilterIndex]="i" (onCustomFilterRemove)="removeCustomFilter(i)"></app-custom-filter>
+			[customFilterIndex]="i"
+			[filterColummnArr]="filterColummnArr"
+			[filterOperatorArr]="filterOperatorArr"
+			(onCustomFilterRemove)="removeCustomFilter($event)"
+			(onFilterColumChange) ="onFilterColumChange($event)"></app-custom-filter>
 		</div>
 	  </div>
 	</div>

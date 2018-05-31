@@ -1,10 +1,11 @@
 <div class="filter-container" [formGroup]="customFilterForm">
 	<div class="filter-child form-group">
-		<select class="filter-name-select form-control"  formControlName="filterColumn">
+		<select class="filter-name-select form-control" [(ngModel)]="selectedFilter" (change)="onSelectChange(selectedFilter)"  formControlName="filterColumn">
       <option value="">None</option>
-      <option value="column1">Column1</option>
+      <option *ngFor="let filterColummn of filterColummnArr" [ngValue]="filterColummn">{{filterColummn.header}}</option>
+      <!-- <option value="column1">Column1</option>
       <option value="column2">Column2</option>
-      <option value="column3">Column3</option>
+      <option value="column3">Column3</option> -->
     </select>
     <small [hidden]="customFilterForm.controls.filterColumn.pristine || customFilterForm.controls.filterColumn.valid" class="text-danger">
       Filter column is required
@@ -13,9 +14,10 @@
 	<div class="filter-child form-group">
 		<select class="filter-name-select form-control" formControlName="operator">
       <option value="">None</option>
-      <option value="equals">Equals</option>
+      <option *ngFor="let filterOperator of filterOperatorArr" [ngValue]="filterOperator.split(' ').join('_')">{{filterOperator}}</option>
+      <!-- <option value="equals">Equals</option>
       <option value="exists">Exists</option>
-      <option value="not_equal">Not equal</option>
+      <option value="not_equal">Not equal</option> -->
     </select>
     <small [hidden]="customFilterForm.controls.operator.pristine || customFilterForm.controls.operator.valid" class="text-danger">
       Operator is required

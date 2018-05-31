@@ -1,6 +1,7 @@
 import { Component, OnInit,Input, Output } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { DataFilter } from './model/data-filter.interface';
+import { Column } from './model/column.model';
 
 @Component({
   selector: 'app-ped-grid-filter',
@@ -9,6 +10,9 @@ import { DataFilter } from './model/data-filter.interface';
 })
 export class PedGridFilterComponent implements OnInit {
   public myForm: FormGroup;
+  @Input("filterColumnObj")
+  filterColummnArr:Column[];
+  filterOperatorArr:string[] = [];
   constructor(private _fb: FormBuilder) { }
 
   ngOnInit() {
@@ -42,6 +46,29 @@ export class PedGridFilterComponent implements OnInit {
     control.removeAt(i);
   }
 
+  onFilterColumChange(column:any){
+    this.filterOperatorArr = [];
+    if(column != undefined && column != null && column != ""){
+      if(column.type === "number"){
+        this.filterOperatorArr.push("=");
+        this.filterOperatorArr.push("!=");
+        this.filterOperatorArr.push("<");
+        this.filterOperatorArr.push(">");
+        this.filterOperatorArr.push("<=");
+        this.filterOperatorArr.push(">=");
+      }
+      else if(column.type === "boolean"){
+        this.filterOperatorArr.push("False");
+        this.filterOperatorArr.push("True");
+      }
+      else{
+        this.filterOperatorArr.push("Equals");
+        this.filterOperatorArr.push("Not equals");
+        this.filterOperatorArr.push("Exists");
+        this.filterOperatorArr.push("Not exists");
+      }
+    }
+  }
   save(model: DataFilter) {
       // call API to save
       // ...
