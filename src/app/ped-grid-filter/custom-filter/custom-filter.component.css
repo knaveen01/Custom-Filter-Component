@@ -1,0 +1,10 @@
+
+.filter-container{
+	display:flex;
+	width:350px;
+}
+
+.filter-child{
+	flex: auto;
+	padding:10px 20px;
+}

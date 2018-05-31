@@ -1,0 +1,27 @@
+<form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+	<div style="display: flex;width: 100px;">
+		<div class="margin-20" style="flex: auto;padding: 5px 10px;"> 
+			<button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+		</div>
+		<div class="margin-20" style="flex: auto;padding: 5px 10px;">
+			<button (click)="addCustomFilter()" style="cursor: default">Add+</button>
+		</div>
+	</div>			
+	<!--customFilters-->
+	<div formArrayName="customFilters">
+	  <div *ngFor="let customFilter of myForm.controls.customFilters.controls; let i=index" class="panel panel-default">
+		<div class="panel-body" [formGroupName]="i">
+		  <app-custom-filter [group]="myForm.controls.customFilters.controls[i]" 
+		  [customFilterCount]="myForm.controls.customFilters.controls.length" 
+		  [customFilterIndex]="i" (onCustomFilterRemove)="removeCustomFilter(i)"></app-custom-filter>
+		</div>
+	  </div>
+	</div>
+	<div class="clearfix"></div>
+
+	<div class="margin-20">
+	  <div>myForm details:-</div>
+	  <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+	  <pre>form value: <br>{{myForm.value | json}}</pre>
+	</div>
+  </form>
