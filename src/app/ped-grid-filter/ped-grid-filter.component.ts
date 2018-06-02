@@ -2,17 +2,17 @@ import { Component, OnInit,Input, Output } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { DataFilter } from './model/data-filter.interface';
 import { Column } from './model/column.model';
-
+import { SharedModule } from '../shared/shared.module';
 @Component({
   selector: 'app-ped-grid-filter',
   templateUrl: './ped-grid-filter.component.html',
-  styleUrls: ['./ped-grid-filter.component.css']
+  styleUrls: ['./ped-grid-filter.component.scss']
 })
 export class PedGridFilterComponent implements OnInit {
   public myForm: FormGroup;
   @Input("filterColumnObj")
   filterColummnArr:Column[];
-  filterOperatorArr:string[] = [];
+  filterOperatorArr:any[] = [];
   constructor(private _fb: FormBuilder) { }
 
   ngOnInit() {
@@ -44,30 +44,35 @@ export class PedGridFilterComponent implements OnInit {
   removeCustomFilter(i: number) {
     const control = <FormArray>this.myForm.controls['customFilters'];
     control.removeAt(i);
+    this.filterOperatorArr.splice(i,1);
   }
 
-  onFilterColumChange(column:any){
-    this.filterOperatorArr = [];
+  onFilterColumChange(selectedFilter:any){
+    let selectedIndex = selectedFilter.selectedIndex;
+    let column:any = selectedFilter.filterColumn;
+    //this.filterOperatorArr = [];
+    let operatorArr:string[] = [];
     if(column != undefined && column != null && column != ""){
       if(column.type === "number"){
-        this.filterOperatorArr.push("=");
-        this.filterOperatorArr.push("!=");
-        this.filterOperatorArr.push("<");
-        this.filterOperatorArr.push(">");
-        this.filterOperatorArr.push("<=");
-        this.filterOperatorArr.push(">=");
+        operatorArr.push("=");
+        operatorArr.push("!=");
+        operatorArr.push("<");
+        operatorArr.push(">");
+        operatorArr.push("<=");
+        operatorArr.push(">=");
       }
       else if(column.type === "boolean"){
-        this.filterOperatorArr.push("False");
-        this.filterOperatorArr.push("True");
+        operatorArr.push("False");
+        operatorArr.push("True");
       }
       else{
-        this.filterOperatorArr.push("Equals");
-        this.filterOperatorArr.push("Not equals");
-        this.filterOperatorArr.push("Exists");
-        this.filterOperatorArr.push("Not exists");
+        operatorArr.push("Equals");
+        operatorArr.push("Not equals");
+        operatorArr.push("Exists");
+        operatorArr.push("Not exists");
       }
     }
+    this.filterOperatorArr[selectedIndex] = operatorArr;    
   }
   save(model: DataFilter) {
       // call API to save

@@ -1,12 +1,13 @@
 import { Component, OnInit,EventEmitter,Input,Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Column } from '../model/column.model';
+import { SharedModule } from '../../shared/shared.module';
 //import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-custom-filter',
   templateUrl: './custom-filter.component.html',
-  styleUrls: ['./custom-filter.component.css']
+  styleUrls: ['./custom-filter.component.scss']
 })
 export class CustomFilterComponent implements OnInit {
   @Input('group')
@@ -18,11 +19,11 @@ export class CustomFilterComponent implements OnInit {
   @Input('filterColummnArr')
   public filterColummnArr:Column[];
   @Input('filterOperatorArr')
-  public filterOperatorArr:string[];
+  public filterOperatorArr:any[];
   @Output()
   onCustomFilterRemove = new EventEmitter<number>();
   @Output()
-  onFilterColumChange = new EventEmitter<Column>();
+  onFilterColumChange = new EventEmitter<any>();
   //@Output() incremented = new EventEmitter<boolean>();
   constructor() { 
     //console.log("Count:"+this.customFilterCount+",Position:"+this.customFilterIndex)
@@ -40,6 +41,12 @@ export class CustomFilterComponent implements OnInit {
   }
 
   onSelectChange(filterColumn:Column){
-    this.onFilterColumChange.emit(filterColumn);
+    let z =12;
+    z =14;
+    let selectedFilter:any = {
+      selectedIndex : this.customFilterIndex,
+      filterColumn:filterColumn["value"]
+    };
+    this.onFilterColumChange.emit(selectedFilter);
   }
 }

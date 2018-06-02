@@ -4,10 +4,10 @@ import { Column } from './ped-grid-filter/model/column.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Ped Grid Filter App!';
+  title = 'Custom filter Using Reactive forms!';
   columns:Column[] = [
     {
         name:"column1",

@@ -1,31 +1,45 @@
 <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
-	<div style="display: flex;width: 100px;">
-		<div class="margin-20" style="flex: auto;padding: 5px 10px;"> 
-			<button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
-		</div>
-		<div class="margin-20" style="flex: auto;padding: 5px 10px;">
-			<button (click)="addCustomFilter()" style="cursor: default">Add+</button>
-		</div>
-	</div>			
-	<!--customFilters-->
-	<div formArrayName="customFilters">
-	  <div *ngFor="let customFilter of myForm.controls.customFilters.controls; let i=index;" class="panel panel-default">
-		<div class="panel-body" [formGroupName]="i">
-		  <app-custom-filter [group]="myForm.controls.customFilters.controls[i]" 
-		  [customFilterCount]="myForm.controls.customFilters.controls.length" 
-			[customFilterIndex]="i"
-			[filterColummnArr]="filterColummnArr"
-			[filterOperatorArr]="filterOperatorArr"
-			(onCustomFilterRemove)="removeCustomFilter($event)"
-			(onFilterColumChange) ="onFilterColumChange($event)"></app-custom-filter>
-		</div>
-	  </div>
-	</div>
+	<mat-card>
+		<mat-card-header>
+				<mat-card-title class="card-title-reset">Filter Control</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<div style="display: flex;width: 100px;">
+				<div class="margin-20" style="flex: auto;padding: 5px 10px;"> 
+					<button mat-raised-button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Apply</button>
+				</div>
+				<div class="margin-20" style="flex: auto;padding: 5px 10px;">
+					<button mat-raised-button (click)="addCustomFilter()" style="cursor: default"
+					[disabled] = "!(myForm.controls.customFilters.controls.length < filterColummnArr.length)">Add+</button>
+				</div>
+			</div>			
+			<!--customFilters-->
+			<div formArrayName="customFilters">
+				<div *ngFor="let customFilter of myForm.controls.customFilters.controls; let i=index;" class="panel panel-default">
+				<div class="panel-body" [formGroupName]="i">
+					<app-custom-filter [group]="myForm.controls.customFilters.controls[i]" 
+					[customFilterCount]="myForm.controls.customFilters.controls.length" 
+					[customFilterIndex]="i"
+					[filterColummnArr]="filterColummnArr"
+					[filterOperatorArr]="filterOperatorArr"
+					(onCustomFilterRemove)="removeCustomFilter($event)"
+					(onFilterColumChange) ="onFilterColumChange($event)"></app-custom-filter>
+				</div>
+				</div>
+			</div>
+		</mat-card-content>
+	</mat-card>
 	<div class="clearfix"></div>
+	<mat-divider></mat-divider>
 
-	<div class="margin-20">
-	  <div>myForm details:-</div>
-	  <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
-	  <pre>form value: <br>{{myForm.value | json}}</pre>
-	</div>
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title class="card-title-reset">Form details</mat-card-title>			
+			<!-- <mat-card-subtitle>Form data</mat-card-subtitle> -->
+		</mat-card-header>
+		<mat-card-content>
+			<pre>Is myForm valid: {{myForm.valid | json}}</pre>
+			<pre>Form data: {{myForm.value | json}}</pre>
+		</mat-card-content>
+	</mat-card>
   </form>
