@@ -1,36 +1,44 @@
 <div class="filter-container" [formGroup]="customFilterForm">
 	<div class="filter-child form-group">
-		<select class="filter-name-select form-control" [(ngModel)]="selectedFilter" (change)="onSelectChange(selectedFilter)"  formControlName="filterColumn">
-      <option value="">None</option>
-      <option *ngFor="let filterColummn of filterColummnArr" [ngValue]="filterColummn">{{filterColummn.header}}</option>
+      <mat-form-field>
+		<mat-select class="filter-name-select form-control" placeholder="Filter name" [(Value)]="selectedFilter" (selectionChange)="onSelectChange($event)"  formControlName="filterColumn">
+      <!-- <option value="">None</option> -->
+      <mat-option *ngFor="let filterColummn of filterColummnArr" [value]="filterColummn">{{filterColummn.header}}</mat-option>
       <!-- <option value="column1">Column1</option>
       <option value="column2">Column2</option>
       <option value="column3">Column3</option> -->
-    </select>
+    </mat-select>
+  </mat-form-field>
     <small [hidden]="customFilterForm.controls.filterColumn.pristine || customFilterForm.controls.filterColumn.valid" class="text-danger">
       Filter column is required
     </small>
 	</div>
 	<div class="filter-child form-group">
-		<select class="filter-name-select form-control" formControlName="operator">
-      <option value="">None</option>
-      <option *ngFor="let filterOperator of filterOperatorArr" [ngValue]="filterOperator.split(' ').join('_')">{{filterOperator}}</option>
+      <mat-form-field>
+    <mat-select class="filter-name-select form-control" placeholder="Operator" formControlName="operator">
+      <!-- <option value="">None</option> -->
+      <mat-option *ngFor="let filterOperator of filterOperatorArr[customFilterIndex]" [value]="filterOperator.split(' ').join('_')">{{filterOperator}}</mat-option>
       <!-- <option value="equals">Equals</option>
       <option value="exists">Exists</option>
       <option value="not_equal">Not equal</option> -->
-    </select>
+    </mat-select>
+  </mat-form-field>
     <small [hidden]="customFilterForm.controls.operator.pristine || customFilterForm.controls.operator.valid" class="text-danger">
       Operator is required
     </small>
 	</div>
 	<div class="filter-child form-group">
-    <input class="filter-value-input form-control" placeholder="Enter filter value" formControlName="filterValue"/>
+    <mat-form-field>
+      <input matInput  class="filter-value-input form-control" placeholder="Enter filter value" formControlName="filterValue"/>
+    </mat-form-field>
     <small [hidden]="customFilterForm.controls.filterValue.pristine ||  customFilterForm.controls.filterValue.valid" class="text-danger">
       filter value is required
     </small>
 	</div>
 	<div class="filter-child">
 		<button *ngIf="customFilterCount > 1" 
-      (click)="removeCustomFilter(customFilterIndex)">Remove</button>
+      (click)="removeCustomFilter(customFilterIndex)">
+      <mat-icon aria-label="Remove button">close</mat-icon>
+    </button>
 	</div>
 </div>
