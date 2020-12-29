@@ -1,3 +1,5 @@
 # Custom filter Component
 
-This is reusable component. You can just pick 'app/ped-grid-filter' use it for any projects (if you don't want to fight relative path issues place 'ped-grid-filter' under 'app/'. It's not so difficult to overcome path issues though).
+This is reusable component. This widget can be used in any project where there is a need for dynamic filters requirent. As many as filters can be added dynamically by the user. I can be used in advanced search operations.
+
+Note: If you face any path related issues then just place 'ped-grid-filter' under 'app/'.
